@@ -3,6 +3,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import os
 from PIL import Image
+from streamlit_javascript import st_javascript
 
 # Load Data
 df = pd.read_csv("dummy_kompetensi_pegawai.csv", delimiter=";")
@@ -48,8 +49,6 @@ df_plot = df_plot.rename(columns={"index": "Bidang"})
 # Layout: Bar Chart for Pengalaman and Assessment
 st.markdown("### Keahlian Bidang Profesi Keuangan")
 
-from streamlit_javascript import st_javascript
-
 # Auto-detect screen width
 width = st_javascript("window.innerWidth")
 is_mobile = width is not None and width < 768
@@ -62,7 +61,7 @@ if is_mobile:
         fig = go.Figure(go.Indicator(
             mode="gauge+number",
             value=avg_score,
-            number={'font': {'size': 28}},
+            number={'font': {'size': 22}},
             title={'text': f"<b>{row['Bidang']}</b>", 'font': {'size': 12}},
             gauge={
                 'axis': {'range': [0, 100]},
@@ -73,7 +72,7 @@ if is_mobile:
             domain={'x': [0, 1], 'y': [0, 1]}
         ))
         fig.update_layout(
-        height=140,  # Lebih pendek
+        height=110,  # Lebih pendek
             margin=dict(t=5, b=5, l=5, r=5),
             font=dict(size=12),  # Kecilkan semua teks dalam chart
         )
