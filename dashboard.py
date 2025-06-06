@@ -48,32 +48,31 @@ df_plot = df_plot.rename(columns={"index": "Bidang"})
 # Layout: Bar Chart for Pengalaman and Assessment
 st.markdown("### Keahlian dalam Bidang Profesi Keuangan")
 
-gauge_cols = st.columns(min(len(df_plot), 4))  # one column per bidang
+is_mobile = st.sidebar.toggle("Mode Mobile", value=False)
 
-for i, row in df_plot.iterrows():
-    avg_score = round((row["Kompetensi"] + row["Pengalaman"] + row["Assessment"]) / 3)
+if is_mobile:
+    for i, row in df_plot.iterrows():
+        avg_score = round((row["Kompetensi"] + row["Pengalaman"] + row["Assessment"]) / 3)
 
-    with gauge_cols[i]:
-        # Gauge for average score
+        st.subheader(row['Bidang'])
         fig = go.Figure(go.Indicator(
             mode="gauge+number",
             value=avg_score,
-            title={'text': f"<b>{row['Bidang']}</b>", 'font': {'size': 14}},
+            title={'text': f"<b>{row['Bidang']}</b>", 'font': {'size': 12}},
             gauge={
                 'axis': {'range': [0, 100]},
-                'bar': {'color': "#1f77b4"},  # green
+                'bar': {'color': "#1f77b4"},
                 'bgcolor': "white",
                 'shape': "angular"
             },
             domain={'x': [0, 1], 'y': [0, 1]}
         ))
         fig.update_layout(
-            height=180,  # reduce height to make it fit in mobile
-            margin=dict(t=20, b=10, l=5, r=5),
+            height=180,
+            margin=dict(t=10, b=10, l=5, r=5),
         )
         st.plotly_chart(fig, use_container_width=True)
 
-        # Subscores
         st.markdown(f"**Kompetensi: {row['Kompetensi']}**")
         st.progress(row['Kompetensi'] / 100)
 
@@ -82,3 +81,37 @@ for i, row in df_plot.iterrows():
 
         st.markdown(f"**Assessment**: {row['Assessment']}")
         st.progress(row['Assessment'] / 100)
+        st.markdown("---")
+else:
+    gauge_cols = st.columns(min(len(df_plot), 4))
+
+    for i, row in df_plot.iterrows():
+        avg_score = round((row["Kompetensi"] + row["Pengalaman"] + row["Assessment"]) / 3)
+
+        with gauge_cols[i]:
+            fig = go.Figure(go.Indicator(
+                mode="gauge+number",
+                value=avg_score,
+                title={'text': f"<b>{row['Bidang']}</b>", 'font': {'size': 14}},
+                gauge={
+                    'axis': {'range': [0, 100]},
+                    'bar': {'color': "#1f77b4"},
+                    'bgcolor': "white",
+                    'shape': "angular"
+                },
+                domain={'x': [0, 1], 'y': [0, 1]}
+            ))
+            fig.update_layout(
+                height=180,
+                margin=dict(t=20, b=10, l=5, r=5),
+            )
+            st.plotly_chart(fig, use_container_width=True)
+
+            st.markdown(f"**Kompetensi: {row['Kompetensi']}**")
+            st.progress(row['Kompetensi'] / 100)
+
+            st.markdown(f"**Pengalaman**: {row['Pengalaman']}")
+            st.progress(row['Pengalaman'] / 100)
+
+            st.markdown(f"**Assessment**: {row['Assessment']}")
+            st.progress(row['Assessment'] / 100)
