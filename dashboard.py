@@ -48,7 +48,11 @@ df_plot = df_plot.rename(columns={"index": "Bidang"})
 # Layout: Bar Chart for Pengalaman and Assessment
 st.markdown("### Keahlian Bidang Profesi Keuangan")
 
-is_mobile = st.sidebar.toggle("Mode Mobile", value=False)
+from streamlit_javascript import st_javascript
+
+# Auto-detect screen width
+width = st_javascript("window.innerWidth")
+is_mobile = width is not None and width < 768
 
 if is_mobile:
     for i, row in df_plot.iterrows():
