@@ -77,8 +77,8 @@ if is_mobile:
                 domain={'x': [0, 1], 'y': [0, 1]}
             ))
             fig.update_layout(
-                width=250,
-                height=110,
+                width=200,
+                height=88,
                 margin=dict(t=0, b=0, l=0, r=0),
                 font=dict(size=11)
             )
