@@ -57,7 +57,7 @@ if is_mobile:
     for i, row in df_plot.iterrows():
         avg_score = round((row["Kompetensi"] + row["Pengalaman"] + row["Assessment"]) / 3)
 
-        st.subheader(row['Bidang'])
+        st.markdown(f"#### {row['Bidang']}")
         fig = go.Figure(go.Indicator(
             mode="gauge+number",
             value=avg_score,
@@ -72,7 +72,7 @@ if is_mobile:
             domain={'x': [0, 1], 'y': [0, 1]}
         ))
         fig.update_layout(
-        height=110,  # Lebih pendek
+        height=100,  # Lebih pendek
             margin=dict(t=5, b=5, l=5, r=5),
             font=dict(size=12),  # Kecilkan semua teks dalam chart
         )
