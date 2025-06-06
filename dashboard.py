@@ -77,11 +77,12 @@ if is_mobile:
                 domain={'x': [0, 1], 'y': [0, 1]}
             ))
             fig.update_layout(
-                height=100,
+                width=250
+                height=110,
                 margin=dict(t=0, b=0, l=0, r=0),
                 font=dict(size=11)
             )
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, config={"responsive": True})
 
             # Close fixed container
             st.markdown('</div>', unsafe_allow_html=True)
