@@ -48,7 +48,7 @@ df_plot = df_plot.rename(columns={"index": "Bidang"})
 # Layout: Bar Chart for Pengalaman and Assessment
 st.markdown("### Keahlian dalam Bidang Profesi Keuangan")
 
-gauge_cols = st.columns(len(df_plot))  # one column per bidang
+gauge_cols = st.columns(min(len(df_plot), 4))  # one column per bidang
 
 for i, row in df_plot.iterrows():
     avg_score = round((row["Kompetensi"] + row["Pengalaman"] + row["Assessment"]) / 3)
