@@ -1,4 +1,5 @@
 streamlit
+streamlit-javascript
 pandas
 plotly
 Pillow
