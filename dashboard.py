@@ -67,7 +67,10 @@ for i, row in df_plot.iterrows():
             },
             domain={'x': [0, 1], 'y': [0, 1]}
         ))
-        fig.update_layout(height=200, margin=dict(t=10, b=0, l=10, r=10))
+        fig.update_layout(
+            height=180,  # reduce height to make it fit in mobile
+            margin=dict(t=20, b=10, l=5, r=5),
+        )
         st.plotly_chart(fig, use_container_width=True)
 
         # Subscores
