@@ -58,7 +58,7 @@ for i, row in df_plot.iterrows():
         fig = go.Figure(go.Indicator(
             mode="gauge+number",
             value=avg_score,
-            title={'text': f"<b>{row['Bidang']}</b>", 'font': {'size': 16}},
+            title={'text': f"<b>{row['Bidang']}</b>", 'font': {'size': 14}},
             gauge={
                 'axis': {'range': [0, 100]},
                 'bar': {'color': "#1f77b4"},  # green
