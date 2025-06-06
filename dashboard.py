@@ -57,36 +57,45 @@ if is_mobile:
     for i, row in df_plot.iterrows():
         avg_score = round((row["Kompetensi"] + row["Pengalaman"] + row["Assessment"]) / 3)
 
-        st.markdown(f"#### {row['Bidang']}")
-        fig = go.Figure(go.Indicator(
-            mode="gauge+number",
-            value=avg_score,
-            number={'font': {'size': 22}},
-            title={'text': f"<b>{row['Bidang']}</b>", 'font': {'size': 12}},
-            gauge={
-                'axis': {'range': [0, 100]},
-                'bar': {'color': "#1f77b4"},
-                'bgcolor': "white",
-                'shape': "angular"
-            },
-            domain={'x': [0, 1], 'y': [0, 1]}
-        ))
-        fig.update_layout(
-        height=100,  # Lebih pendek
-            margin=dict(t=5, b=5, l=5, r=5),
-            font=dict(size=12),  # Kecilkan semua teks dalam chart
-        )
-        st.plotly_chart(fig, use_container_width=True)
+        with st.container():
+            st.markdown(f"#### {row['Bidang']}")
 
-        st.markdown(f"**Kompetensi: {row['Kompetensi']}**")
-        st.progress(row['Kompetensi'] / 100)
+            # Start fixed container
+            st.markdown('<div style="width: 250px; margin: auto;">', unsafe_allow_html=True)
 
-        st.markdown(f"**Pengalaman**: {row['Pengalaman']}")
-        st.progress(row['Pengalaman'] / 100)
+            fig = go.Figure(go.Indicator(
+                mode="gauge+number",
+                value=avg_score,
+                number={'font': {'size': 22}},
+                title={'text': "", 'font': {'size': 12}},  # Hide duplicated title
+                gauge={
+                    'axis': {'range': [0, 100]},
+                    'bar': {'color': "#1f77b4"},
+                    'bgcolor': "white",
+                    'shape': "angular"
+                },
+                domain={'x': [0, 1], 'y': [0, 1]}
+            ))
+            fig.update_layout(
+                height=100,
+                margin=dict(t=0, b=0, l=0, r=0),
+                font=dict(size=11)
+            )
+            st.plotly_chart(fig, use_container_width=True)
 
-        st.markdown(f"**Assessment**: {row['Assessment']}")
-        st.progress(row['Assessment'] / 100)
-        st.markdown("---")
+            # Close fixed container
+            st.markdown('</div>', unsafe_allow_html=True)
+
+            st.markdown(f"**Kompetensi: {row['Kompetensi']}**")
+            st.progress(row['Kompetensi'] / 100)
+
+            st.markdown(f"**Pengalaman**: {row['Pengalaman']}")
+            st.progress(row['Pengalaman'] / 100)
+
+            st.markdown(f"**Assessment**: {row['Assessment']}")
+            st.progress(row['Assessment'] / 100)
+            st.markdown("---")
+
 else:
     gauge_cols = st.columns(min(len(df_plot), 4))
 
