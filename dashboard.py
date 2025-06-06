@@ -46,7 +46,7 @@ df_plot = pd.DataFrame(kompetensi, index=["Kompetensi", "Pengalaman", "Assessmen
 df_plot = df_plot.rename(columns={"index": "Bidang"})
 
 # Layout: Bar Chart for Pengalaman and Assessment
-st.markdown("### Keahlian dalam Bidang Profesi Keuangan")
+st.markdown("### Keahlian Bidang Profesi Keuangan")
 
 is_mobile = st.sidebar.toggle("Mode Mobile", value=False)
 
@@ -58,6 +58,7 @@ if is_mobile:
         fig = go.Figure(go.Indicator(
             mode="gauge+number",
             value=avg_score,
+            number={'font': {'size': 28}},
             title={'text': f"<b>{row['Bidang']}</b>", 'font': {'size': 12}},
             gauge={
                 'axis': {'range': [0, 100]},
@@ -68,8 +69,9 @@ if is_mobile:
             domain={'x': [0, 1], 'y': [0, 1]}
         ))
         fig.update_layout(
-            height=180,
-            margin=dict(t=10, b=10, l=5, r=5),
+        height=140,  # Lebih pendek
+            margin=dict(t=5, b=5, l=5, r=5),
+            font=dict(size=12),  # Kecilkan semua teks dalam chart
         )
         st.plotly_chart(fig, use_container_width=True)
 
@@ -115,3 +117,5 @@ else:
 
             st.markdown(f"**Assessment**: {row['Assessment']}")
             st.progress(row['Assessment'] / 100)
+
+st.markdown("<br><br>", unsafe_allow_html=True)
